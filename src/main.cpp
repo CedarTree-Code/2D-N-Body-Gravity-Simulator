@@ -4,7 +4,7 @@ using namespace sf;
 
 int main() {
 
-	//setup
+	//----SETUP----//
 
 	//RenderWindow window(VideoMode::getDesktopMode(), "Drawing a circle", State::Fullscreen);
 	RenderWindow window(VideoMode({1600, 900}), "Drawing a circle");
@@ -16,7 +16,8 @@ int main() {
 	circle.setFillColor(Color::Blue);
 
 	float circleXpos = height/2, circleYpos = width/2; 	//initial position
-	float circleXvel = 300.f, circleYvel = -500.f; 			//initial velocity
+	float circleXvel = 300.f, circleYvel = -500.f; 		//initial velocity
+	float circleXacc = 0.f, circleYacc = 700.f;			//initial acceleration
 
 	Clock clock; 				//start timing
 
@@ -33,7 +34,7 @@ int main() {
 			}
 		}
 
-		//----DISPLAY CYCLE----
+		//----DISPLAY CYCLE----//
 
 		//clear screen
 		window.clear(Color::Black); 
@@ -46,7 +47,12 @@ int main() {
 		time2 = clock.getElapsedTime();
 		Dtime = time2-time1;
 		time1 = time2;
-		circleXpos+=circleXvel*Dtime.asSeconds(); circleYpos+=circleYvel*Dtime.asSeconds();
+
+		circleXvel+=circleXacc*Dtime.asSeconds(); 
+		circleYvel+=circleYacc*Dtime.asSeconds();
+
+		circleXpos+=circleXvel*Dtime.asSeconds(); 
+		circleYpos+=circleYvel*Dtime.asSeconds();
 
 		window.display();
 
