@@ -2,6 +2,40 @@
 #include <iostream>
 using namespace sf;
 
+struct Planet {
+
+	float Xpos, Ypos, Xvel, Yvel, Xacc, Yacc, size;
+	Color colour;
+	CircleShape shape;
+
+	Planet() {
+		Xpos = Ypos = Xvel = Yvel = Xacc = Yacc = size = 0.f; colour = Color::White;
+		shape.setRadius(size);
+		shape.setOrigin({size, size});
+		shape.setFillColor(colour);
+	}
+
+	Planet(float xpos, float ypos, float xvel, float yvel, float xacc, float yacc, float S, Color C) {
+		Xpos = xpos; Ypos = ypos; //initial position
+		Xvel = xvel; Yvel = yvel; //initial velocity
+		Xacc = xacc; Yacc = yacc; //initial acceleration
+		size = S; colour = C;
+
+		//setup Planet shape for display
+		shape.setRadius(size);
+		shape.setOrigin({size, size});
+		shape.setFillColor(colour);
+	}
+
+	void update(float dt) {
+		Xvel += Xacc * dt; 
+		Yvel += Yacc * dt;
+		Xpos += Xvel * dt;
+		Ypos += Yvel * dt;
+	}
+
+};
+
 int main() {
 
 	//----SETUP----//
@@ -11,16 +45,9 @@ int main() {
 	float height = window.getSize().x;
 	float width = window.getSize().y;
 
-	CircleShape circle(100.f);
-	circle.setOrigin({100.f, 100.f});
-	circle.setFillColor(Color::Blue);
+	Planet earth (height/2, width/2, 200.f, -200.f, 0.f, 350.f, 100.f, Color::Blue);
 
-	float circleXpos = height/2, circleYpos = width/2; 	//initial position
-	float circleXvel = 300.f, circleYvel = -500.f; 		//initial velocity
-	float circleXacc = 0.f, circleYacc = 700.f;			//initial acceleration
-
-	Clock clock; 				//start timing
-
+	Clock clock; //start timing
 	Time time1 = clock.getElapsedTime(), time2, Dtime; 	//Dtime is (Delta) change in time
 	
 	while(window.isOpen()) {
@@ -39,20 +66,16 @@ int main() {
 		//clear screen
 		window.clear(Color::Black); 
 
-		//draw object
-		circle.setPosition({circleXpos, circleYpos});
-		window.draw(circle); 
+		//draw shapes
+		earth.shape.setPosition({earth.Xpos, earth.Ypos});
+		window.draw(earth.shape); 
 
-		//update object
+		//update time and object
 		time2 = clock.getElapsedTime();
 		Dtime = time2-time1;
 		time1 = time2;
 
-		circleXvel+=circleXacc*Dtime.asSeconds(); 
-		circleYvel+=circleYacc*Dtime.asSeconds();
-
-		circleXpos+=circleXvel*Dtime.asSeconds(); 
-		circleYpos+=circleYvel*Dtime.asSeconds();
+		earth.update(Dtime.asSeconds());
 
 		window.display();
 
