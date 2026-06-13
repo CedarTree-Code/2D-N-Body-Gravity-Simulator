@@ -5,21 +5,22 @@
 #include "universe.h"
 
 int main() {
+	
 	//---INITIALISATION---//
 	RenderWindow space(VideoMode(WINDOW_SIZE), "Basic N-body system", State::Fullscreen); //Fullscreen support removed
 	space.setFramerateLimit(144);
 	RenderWindow& ref = space;
 
-	Planet earth(H_SIZE/2, V_SIZE/2, 100, Color::Blue, 2000);
-	Planet moon(H_SIZE/2 - 400, V_SIZE/2, 30, Color::White, 500);
-	// Planet rock(H_SIZE/2 - 60, V_SIZE/2 - 200, 10, Color::Cyan, 100);
-	earth.initialNudge(0, 0.25);
-	moon.initialNudge(0, -1);
-	// rock.initialNudge(5, 0);
-	Planet planets[2] = {earth, moon};
-	Universe universe (2, planets, 3);
+	// Planet earth(H_SIZE/2, V_SIZE/2, 100, Color::Blue, 2000);
+	// Planet moon(H_SIZE/2 - 400, V_SIZE/2, 30, Color::White, 500);
+	// // Planet rock(H_SIZE/2 - 60, V_SIZE/2 - 200, 10, Color::Cyan, 100);
+	// earth.initialNudge(0, 0.25);
+	// moon.initialNudge(0, -1);
+	// // rock.initialNudge(5, 0);
+	// Planet planets[2] = {earth, moon};
+	// Universe universe (2, planets, 3);
 
-	// Universe universe(3, true);
+	Universe universe(7, true);
 
 	//---SETUP---//
 	std::vector<double> KineticEnergy, PotentialEnergy, TotalEnergy; //for plotting

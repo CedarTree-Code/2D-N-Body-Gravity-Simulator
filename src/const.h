@@ -8,8 +8,8 @@
 #define MAX_FORCE 600000.f
 #define MAX_NUDGE 2.5
 
-#define MIN_SIZE 1
-#define MAX_SIZE 100
+#define MIN_SIZE 5
+#define MAX_SIZE 10
 #define MIN_MASS 100
 #define MAX_MASS 3000
 

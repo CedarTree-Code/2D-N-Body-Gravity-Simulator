@@ -7,8 +7,8 @@ Planet::Planet() {
     prevpos.x = pos.x + fRandom(-MAX_NUDGE, MAX_NUDGE);
     prevpos.y = pos.y + fRandom(-MAX_NUDGE, MAX_NUDGE);
     acc.x = acc.y = 0;
-    size = fRandom(1, 150);
-    mass = fRandom(100, 3000); 
+    size = fRandom(MIN_SIZE, MAX_SIZE);
+    mass = fRandom(MIN_MASS, MAX_MASS); 
 
     colour = Color(iRandom(0, 255), iRandom(0, 255), iRandom(0, 255)); 
     shapeSetup();
