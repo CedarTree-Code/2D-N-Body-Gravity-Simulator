@@ -7,6 +7,7 @@ using namespace sf;
 class Universe {
 	int N; //Number of planets 
 	std::vector<Planet> planets; 
+	//(tree)
 	float G = GRAVITATIONAL_CONST, dist, mindist, PEij;
 	Vector2f dpos, force;
 	double KE, PE;

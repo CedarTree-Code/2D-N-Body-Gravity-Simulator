@@ -1,9 +1,10 @@
 #pragma once
 
-#define H_SIZE 900
-#define V_SIZE 900
+#define H_SIZE 1920
+#define V_SIZE 1080
 #define WINDOW_SIZE {H_SIZE, V_SIZE}
-#define SCREEN_STATE State::Windowed
+#define N_SIZE std::max(H_SIZE, V_SIZE)
+#define SCREEN_STATE State::Fullscreen
 
 #define GRAVITATIONAL_CONST 10000.f
 #define MAX_FORCE 600000.f
@@ -16,6 +17,6 @@
 
 #define D_t (float)(1./144)  //~ 1./fps --- global variable
 
-#define MAX_POINT_COUNT 1
-#define BOX_THICKNESS .5f
+#define MAX_PER_NODE_COUNT 1
+#define BOX_THICKNESS .75f
 

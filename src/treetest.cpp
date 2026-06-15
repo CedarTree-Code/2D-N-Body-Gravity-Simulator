@@ -8,8 +8,9 @@ int main() {
 
     Universe test(60, true);
     std::vector<Vector2f> points = test.getPlanetPositions();
-    Node tree(H_SIZE, V_SIZE, Vector2f(H_SIZE/2, V_SIZE/2), 0, points);
-    tree.make();
+    
+    Node tree(N_SIZE, Vector2f(H_SIZE/2, V_SIZE/2), points.size());
+    tree.make(points);
     tree.draw(ref);
     test.show(ref);
 
