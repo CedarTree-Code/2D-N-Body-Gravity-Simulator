@@ -26,9 +26,8 @@ class Node {
     void splitNode(std::vector<Vector2f>& points);
     void splitNode(std::vector<Planet>& planets);
     void drawTree(RenderWindow& window);
+    void clean();
 
     std::vector<Vector3f> approx (int b, std::vector<Planet>& planets);
     std::vector<Vector3f> check(int b, std::vector<Planet>& planets);
-
-    ~Node();
 };

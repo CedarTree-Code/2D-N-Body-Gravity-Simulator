@@ -19,7 +19,7 @@
 
 #define D_t (float)(1./144)  //~ 1./fps --- global variable
 
-#define MAX_PER_NODE_COUNT (int)1
+#define MAX_PER_NODE_COUNT (int)6
 #define BOX_THICKNESS .75f
-#define Z 0.5
+#define Z 0.4
 

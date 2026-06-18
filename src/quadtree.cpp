@@ -42,13 +42,13 @@ void Node::resize(int n, std::vector<Planet>& planets) {
 }
 
 void Node::calcCOMs(std::vector<Planet>& planets) {
-    float M, Xsum, Ysum;
+    float M=0, Xsum=0, Ysum=0;
     if(has_subnodes){
         for(int i=0; i<4; i++) {
             subnode[i]->calcCOMs(planets);
             M += subnode[i]->COM.z;
-            Xsum += planets.at(i).mass*subnode[i]->COM.x;
-            Ysum += planets.at(i).mass*subnode[i]->COM.y;        
+            Xsum += subnode[i]->COM.z*subnode[i]->COM.x;
+            Ysum += subnode[i]->COM.z*subnode[i]->COM.y;        
         }
     }else{
         for(int i : indices) {
@@ -57,7 +57,8 @@ void Node::calcCOMs(std::vector<Planet>& planets) {
             Ysum += planets.at(i).mass*planets.at(i).pos.y;
         }
     }
-    COM = Vector3f(Xsum/M, Ysum/M, M);
+    if(M==0) COM = Vector3f(0, 0, 0);
+    else COM = Vector3f(Xsum/M, Ysum/M, M);
 }
 
 void Node::splitNode(std::vector<Vector2f>& things) { //points
@@ -156,23 +157,25 @@ std::vector<Vector3f> Node::check(int b, std::vector<Planet>& planets) {
     return out;
 }
 
-Node::~Node() {
-    while(has_subnodes) {
-        bool a=false;
-        for(int i=0; i<4; i++) if (subnode[i]->has_subnodes) a=true;
-        if (a) {
-            for(int i=0; i<4; i++) {
-                bool b=false;
-                for(int j=0; j<4; j++) 
-                    if(subnode[i]->subnode[j]->has_subnodes) b=true;
-                if (b == false) {
-                    subnode[i]->has_subnodes=false;
-                    for(int j=0; j<4; j++) delete subnode[j];
-                }else subnode[i]->~Node();
+void Node::clean() {
+    if (has_subnodes) {
+        for(int i=0; i<4; i++){
+            if(subnode[i]->has_subnodes) {
+                bool check = false;
+                for(int j=0; j<4; j++) if(subnode[i]->subnode[j]->has_subnodes) check=true;
+                if(!check) {
+                    for(int j=0; j<4; j++) {
+                        delete subnode[i]->subnode[j];
+                        //subnode[i]->subnode[j] = nullptr;
+                    }
+                    subnode[i]->has_subnodes = false;
+                }else{
+                    subnode[i]->clean();
+                }
             }
-        }else{
-            has_subnodes = false;
-            for(int i=0; i<4; i++) delete subnode[i];
+            delete subnode[i];
+            //subnode[i] = nullptr;
         }
+        has_subnodes = false;
     }
 }

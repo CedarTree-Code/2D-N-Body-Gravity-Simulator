@@ -98,6 +98,9 @@ void Universe::simulate(int simtype) {
 
                 planets.at(i).acc += -force/planets.at(i).mass;
             }
+
+            //cleanup
+            qtree.clean();
         }
         PE/=2; //double calc-ed PE of system 
     }
@@ -108,8 +111,6 @@ void Universe::simulate(int simtype) {
             KE += 0.5*planets.at(i).mass*planets.at(i).vel.lengthSquared();
         }
 
-    //cleanup
-    qtree.~Node();
 }
 
 void Universe::createTree(RenderWindow& space) {
