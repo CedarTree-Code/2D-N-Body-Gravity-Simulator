@@ -23,9 +23,8 @@ class Node {
 
     void resize(std::vector<Planet>& planets); //rescales bounding box
     void calcCOMs(std::vector<Planet>& planets);
-    // void splitNode(std::vector<Vector2f>& points);
     std::vector<Node*> splitNode(std::vector<Planet>& planets);
     void drawTree(RenderWindow& window);
 
-    std::vector<Vector3f> check(int b, std::vector<Planet>& planets, float Z);
+    std::vector<Vector3f> check(int b, std::vector<Planet>& planets, float z);
 };

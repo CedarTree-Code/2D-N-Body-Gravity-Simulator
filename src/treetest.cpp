@@ -22,6 +22,4 @@ int main() {
       }
     }
   }
-
-  //randomSeedGen(20);
 }

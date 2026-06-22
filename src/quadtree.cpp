@@ -63,25 +63,6 @@ void Node::calcCOMs(std::vector<Planet>& planets) {
     else COM = Vector3f(Xsum/M, Ysum/M, M);
 }
 
-// void Node::splitNode(std::vector<Vector2f>& things) { //points
-//     has_subnodes = true;
-//     subnode[0] = new Node(Vector2f(midpoint.x - size/4, midpoint.y - size/4), size/2);
-//     subnode[1] = new Node(Vector2f(midpoint.x + size/4, midpoint.y - size/4), size/2);
-//     subnode[2] = new Node(Vector2f(midpoint.x - size/4, midpoint.y + size/4), size/2);
-//     subnode[3] = new Node(Vector2f(midpoint.x + size/4, midpoint.y + size/4), size/2);
-
-//     for(int i : indices) {
-//         int k=0;
-//         if(things.at(i).x > midpoint.x) ++k;
-//         if(things.at(i).y > midpoint.y) ++++k; 
-//         subnode[k]->indices.insert(i);
-//     }
-
-//     for(int i=0; i<4; i++) 
-//         if (subnode[i]->indices.size() > MAX_PER_NODE_COUNT)
-//             subnode[i]->splitNode(things);
-// }
-
 std::vector<Node*> Node::splitNode(std::vector<Planet>& things) { //planets
     //if(is_root) Timer timer("Node::splitNode()");
     has_subnodes = true;
@@ -126,16 +107,16 @@ void Node::drawTree(RenderWindow& window) {
             subnode[i]->drawTree(window);
 }
 
-std::vector<Vector3f> Node::check(int b, std::vector<Planet>& planets, float Z) {
+std::vector<Vector3f> Node::check(int b, std::vector<Planet>& planets, float z) {
     std::vector<Vector3f> out, temp;
     Vector2f disp = Vector2(COM.x, COM.y) - planets.at(b).pos;
     float dist = disp.length();
-    if(size/dist < Z) { 
+    if(size/dist < z) { 
         out.push_back(COM);
     }else{
         if(has_subnodes) {
             for(int i=0; i<4; i++) {
-                temp = subnode[i]->check(b, planets, Z);
+                temp = subnode[i]->check(b, planets, z);
                 out.insert(out.end(), temp.begin(), temp.end());
             }
         }else{

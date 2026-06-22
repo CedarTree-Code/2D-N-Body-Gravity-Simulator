@@ -22,11 +22,14 @@ int main() {
 	Universe universe(NO_OF_PLANETS, true);
 	#ifdef TEST_ITER
 	Universe u1 = universe, u2 = universe, u3 = universe;
+	unsigned int i=0;
 	#endif
 	
 	//---SETUP---//
+	#ifndef TEST_ITER
 	std::vector<double> KineticEnergy, PotentialEnergy, TotalEnergy; //for plotting
-	unsigned int count=0, C=12, i=0; //C is resolution of energy plot
+	unsigned int count=0, C=RES; //C is resolution of energy plot
+	#endif
 	
 	while(space.isOpen()) {
 
@@ -54,12 +57,6 @@ int main() {
 			//simulate next time step
 			universe.simulate(1);
 
-			if(count==C) {
-				count-=C;
-				PotentialEnergy.push_back(universe.getPE());
-				KineticEnergy.push_back(universe.getKE());
-				TotalEnergy.push_back(universe.getTE());
-			}else count++;
 		} }
 
 		{ Timer timer("the Barnes-Hut alg (Z = 0.1)"); //simtype 2 --- Z = 0.1
@@ -75,12 +72,6 @@ int main() {
 			//simulate next time step
 			u1.simulate(2, Z1);
 
-			if(count==C) {
-				count-=C;
-				PotentialEnergy.push_back(universe.getPE());
-				KineticEnergy.push_back(universe.getKE());
-				TotalEnergy.push_back(universe.getTE());
-			}else count++;
 		} }
 
 		{ Timer timer("the Barnes-Hut alg (Z = 0.5)");//simtype 2 --- Z = 0.5
@@ -96,12 +87,6 @@ int main() {
 			//simulate next time step
 			u2.simulate(2, Z2);
 
-			if(count==C) {
-				count-=C;
-				PotentialEnergy.push_back(universe.getPE());
-				KineticEnergy.push_back(universe.getKE());
-				TotalEnergy.push_back(universe.getTE());
-			}else count++;
 		} }
 
 		{ Timer timer("the Barnes-Hut alg (Z = 0.7)"); //simtype 2 --- Z = 0.7
@@ -117,17 +102,12 @@ int main() {
 			//simulate next time step
 			u3.simulate(2, Z3);
 
-			if(count==C) {
-				count-=C;
-				PotentialEnergy.push_back(universe.getPE());
-				KineticEnergy.push_back(universe.getKE());
-				TotalEnergy.push_back(universe.getTE());
-			}else count++;
 		} }
 
 		space.close();
 
 		#else
+
 		//---DISPLAY CYCLE---//
 
 		//clear screen
@@ -152,12 +132,15 @@ int main() {
 
 	std::cout << "Simulation Ended!" << std::endl;
 
-	// { std::cout << "Plotting Energies..." << std::endl;
-	// using namespace matplot;
-	// plot(PotentialEnergy, "--xr");
-	// hold(on);
-	// plot(KineticEnergy, "--xgs");
-	// plot(TotalEnergy, "--:ks");
-	// show(); }
-
+	#ifndef TEST_ITER
+	if (SIMULATION_TYPE == 1) std::cout << "Plotting Energies..." << std::endl;
+	if (SIMULATION_TYPE == 2) std::cout << "Plotting (Approx) Energies..." << std::endl;
+	{ using namespace matplot;
+	title("Energies vs Time");
+	plot(PotentialEnergy, "--xr");
+	hold(on);
+	plot(KineticEnergy, "--xgs");
+	plot(TotalEnergy, "--:ks");
+	show(); }
+	#endif
 }

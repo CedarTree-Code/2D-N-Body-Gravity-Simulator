@@ -6,15 +6,15 @@
 #define N_SIZE std::max(H_SIZE, V_SIZE)
 #define SCREEN_STATE State::Fullscreen
 
-#define SIMULATION_TYPE 2 //1 -> Normal, 2 -> Barnes-Hut
+#define SIMULATION_TYPE //1 -> Normal, 2 -> Barnes-Hut
 #define Z 0.6 //s/d
-#define NO_OF_PLANETS 2500 //1 -> 20000 barely inches along, 2 -> 80000 at Z=0.75 does similar
+#define NO_OF_PLANETS 250 //1 -> 20000 barely inches along, 2 -> 80000 at Z=0.75 does similar
+#define RES 6 //resolution of energy plot --- IF RES = n, every n timesteps the Energies are calculated
 
-//for testing
-// #define TEST_ITER 24
-// #define Z1 0.1 
-// #define Z2 0.5 
-// #define Z3 0.7 
+#define TEST_ITER 48 //for testing (disables Energy plotting)
+#define Z1 0.1 
+#define Z2 0.5 
+#define Z3 0.7 
 
 #define GRAVITATIONAL_CONST 1e-5f
 #define MAX_FORCE 1000.f

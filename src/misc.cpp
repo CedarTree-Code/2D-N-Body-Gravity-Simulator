@@ -17,12 +17,6 @@ float deNormalize(float l) {
     return l*N_SIZE;
 }
 
-void randomSeedGen(int n) {
-    std::random_device rd;
-    for(int i=0; i<n; i++)
-        std::cout << rd() << std::endl;
-}
-
 Timer::Timer(std::string name) {
     functionName = name;
     start = std::chrono::steady_clock::now();
